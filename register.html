@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | SyncoShopix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e0e7ef 0%, #f5f7fa 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .register-container {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(44,62,80,0.13);
+      max-width: 420px;
+      width: 100%;
+      padding: 44px 32px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 32px 0;
+    }
+    .brand {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2874f0;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .brand span {
+      color: #222;
+    }
+    .register-title {
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 28px;
+      color: #222;
+      text-align: center;
+    }
+    .form-group {
+      width: 100%;
+      margin-bottom: 22px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .form-group label {
+      font-size: 1rem;
+      color: #444;
+      margin-bottom: 7px;
+      display: block;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+    .form-group .input-icon {
+      position: absolute;
+      left: 18px;
+      top: 69%;
+      transform: translateY(-50%);
+      color: #b0b6be;
+      font-size: 1.15rem;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 13px 44px 13px 48px;
+      border: 1.5px solid #e3e6ea;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      background: #f7f9fa;
+      transition: border 0.2s, box-shadow 0.2s;
+      box-shadow: none;
+      outline: none;
+      margin: 0;
+      box-sizing: border-box;
+      display: block;
+    }
+    .form-group input:focus {
+      border-color: #2874f0;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(40,116,240,0.08);
+    }
+    .form-group .toggle-password {
+      position: absolute;
+      right: 16px;
+      top: 69%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #b0b6be;
+      font-size: 1.1rem;
+      cursor: pointer;
+      z-index: 2;
+    }
+    .register-btn {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(90deg, #2874f0 60%, #0048ba 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(40,116,240,0.08);
+    }
+    .register-btn:hover {
+      background: linear-gradient(90deg, #0048ba 60%, #2874f0 100%);
+      box-shadow: 0 4px 16px rgba(40,116,240,0.13);
+    }
+    .login-link {
+      margin-top: 22px;
+      font-size: 1rem;
+      color: #555;
+      text-align: center;
+    }
+    .login-link a {
+      color: #2874f0;
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 4px;
+    }
+    @media (max-width: 500px) {
+      .register-container {
+        padding: 24px 8px 18px 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="register-success" style="display:none;color:#388e3c;background:#e8f5e9;padding:12px 0 12px 0;text-align:center;border-radius:8px;margin-bottom:18px;font-weight:600;">Registered successfully! Redirecting to login...</div>
+  <form class="register-container" id="registerForm">
+    <div class="brand"><span>Synco</span>Shopix</div>
+    <div class="register-title">Create your account</div>
+    <div class="form-group">
+      <label for="register-name">Full Name</label>
+      <i class="fa fa-user input-icon"></i>
+      <input type="text" id="register-name" name="name" placeholder="Enter your name" required>
+    </div>
+    <div class="form-group">
+      <label for="register-email">Email</label>
+      <i class="fa fa-envelope input-icon"></i>
+      <input type="email" id="register-email" name="email" placeholder="Enter your email" required>
+    </div>
+    <div class="form-group">
+      <label for="register-password">Password</label>
+      <i class="fa fa-lock input-icon"></i>
+      <input type="password" id="register-password" name="password" placeholder="Create a password" required>
+      <button type="button" class="toggle-password" tabindex="-1"><i class="fa fa-eye"></i></button>
+    </div>
+    <button type="submit" class="register-btn">Register</button>
+    <div class="login-link">
+      Already have an account?
+      <a href="login.html">Login</a>
+    </div>
+  </form>
+  <script>
+    // Show/hide password toggle
+    document.querySelector('.toggle-password').addEventListener('click', function() {
+      const pwd = document.getElementById('register-password');
+      const icon = this.querySelector('i');
+      if (pwd.type === 'password') {
+        pwd.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        pwd.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    });
+
+    // Registration logic
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var name = document.getElementById('register-name').value.trim();
+      var email = document.getElementById('register-email').value.trim();
+      var password = document.getElementById('register-password').value;
+      if (!name || !email || !password) return;
+      var users = JSON.parse(localStorage.getItem('users') || '[]');
+      if (users.find(u => u.email === email)) {
+        alert('User already exists with this email!');
+        return;
+      }
+      users.push({ name, email, password });
+      localStorage.setItem('users', JSON.stringify(users));
+      document.getElementById('register-success').style.display = 'block';
+      setTimeout(function() {
+        window.location.href = 'login.html';
+      }, 2000);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | SyncoShopix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(44,62,80,0.12);
+      max-width: 400px;
+      width: 100%;
+      padding: 40px 32px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .brand {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2874f0;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .brand span {
+      color: #222;
+    }
+    .login-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: #222;
+    }
+    .form-group {
+      width: 100%;
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .form-group label {
+      font-size: 0.98rem;
+      color: #555;
+      margin-bottom: 6px;
+      display: block;
+      font-weight: 500;
+    }
+    .form-group .input-icon {
+      position: absolute;
+      left: 18px;
+      top: 65%;
+      transform: translateY(-50%);
+      color: #b0b6be;
+      font-size: 1.15rem;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px 40px 12px 48px;
+      border: 1.5px solid #e3e6ea;
+      border-radius: 7px;
+      font-size: 1rem;
+      background: #f7f9fa;
+      transition: border 0.2s;
+      margin: 0;
+      box-sizing: border-box;
+      display: block;
+    }
+    .form-group input:focus {
+      border-color: #2874f0;
+      outline: none;
+      background: #fff;
+    }
+    .form-group .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 70%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #b0b6be;
+      font-size: 1.1rem;
+      cursor: pointer;
+      z-index: 2;
+    }
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(90deg, #2874f0 60%, #0048ba 100%);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s;
+    }
+    .login-btn:hover {
+      background: linear-gradient(90deg, #0048ba 60%, #2874f0 100%);
+    }
+    .register-link {
+      margin-top: 22px;
+      font-size: 0.98rem;
+      color: #555;
+    }
+    .register-link a {
+      color: #2874f0;
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 4px;
+    }
+    @media (max-width: 500px) {
+      .login-container {
+        padding: 24px 8px 18px 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="login-error" style="display:none;color:#c62828;background:#ffebee;padding:12px 0 12px 0;text-align:center;border-radius:8px;margin-bottom:18px;font-weight:600;">Invalid email or password!</div>
+  <form class="login-container" id="loginForm">
+    <div class="brand"><span>Synco</span>Shopix</div>
+    <div class="login-title">Login to your account</div>
+    <div class="form-group">
+      <label for="login-email">Email or Mobile Number</label>
+      <i class="fa fa-user input-icon"></i>
+      <input type="text" id="login-email" name="email" placeholder="Enter email or mobile" required>
+    </div>
+    <div class="form-group">
+      <label for="login-password">Password</label>
+      <i class="fa fa-lock input-icon"></i>
+      <input type="password" id="login-password" name="password" placeholder="Enter password" required>
+      <button type="button" class="toggle-password" tabindex="-1"><i class="fa fa-eye"></i></button>
+    </div>
+    <button type="submit" class="login-btn">Login</button>
+    <div class="register-link">
+      New to SyncoShopix?
+      <a href="register.html">Create an account</a>
+    </div>
+  </form>
+  <script>
+    // Show/hide password toggle
+    document.querySelector('.toggle-password').addEventListener('click', function() {
+      const pwd = document.getElementById('login-password');
+      const icon = this.querySelector('i');
+      if (pwd.type === 'password') {
+        pwd.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        pwd.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    });
+
+    // Login logic
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var email = document.getElementById('login-email').value.trim();
+      var password = document.getElementById('login-password').value;
+      var users = JSON.parse(localStorage.getItem('users') || '[]');
+      var user = users.find(u => u.email === email && u.password === password);
+      if (user) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        if (typeof restoreCartForUser === 'function') restoreCartForUser(user);
+        window.location.href = 'index.html';
+      } else {
+        var err = document.getElementById('login-error');
+        err.style.display = 'block';
+        setTimeout(function(){ err.style.display = 'none'; }, 2000);
+      }
+    });
+  </script>
+  <script src="js/headerDropdown.js"></script>
+</body>
+</html>
